@@ -13,7 +13,7 @@ package Kubectl::CLIWrapper {
 
   has kubectl => (is => 'ro', isa => 'Str', default => 'kubectl');
 
-  has kube_options => (is => 'ro', isa => 'Str', lazy => 1, default => sub {
+  has kube_options => (is => 'ro', isa => 'ArrayRef[Str]', lazy => 1, default => sub {
     my $self = shift;
 
     my %options = ();
@@ -23,25 +23,25 @@ package Kubectl::CLIWrapper {
     $options{ namespace } = $self->namespace;
     $options{ 'insecure-skip-tls-verify' } = 'true' if ($self->insecure_tls);
 
-    return join ' ', map { "--$_=$options{ $_ }" } keys %options;
+    return [ map { "--$_=$options{ $_ }" } keys %options ];
   });
 
   sub command_for {
-    my ($self, $command) = @_;
-    return join ' ', $self->kubectl, $self->kube_options, $command;
+    my ($self, @params) = @_;
+    return ($self->kubectl, @{ $self->kube_options }, @params);
   }
 
   sub run {
-    my ($self, $command) = @_;
-    return $self->input($command);
+    my ($self, @command) = @_;
+    return $self->input(undef, @command);
   }
 
   sub json {
-    my ($self, $command) = @_;
+    my ($self, @command) = @_;
 
-    $command .= ' -o=json';
+    push @command, '-o=json';
 
-    my $result = $self->run($command);
+    my $result = $self->run(@command);
     my $struct = eval {
       JSON->new->decode($result->output);
     };
@@ -63,10 +63,10 @@ package Kubectl::CLIWrapper {
   sub input {
     my ($self, $input, @params) = @_;
 
-    my $final_command = $self->command_for(@params);
+    my @final_command = $self->command_for(@params);
 
     my ($stdin, $stdout, $stderr);
-    my $pid = open3($stdin, $stdout, $stderr, $final_command);
+    my $pid = open3($stdin, $stdout, $stderr, @final_command);
     print $stdin $input  if(defined $input);
     close $stdin;
 
