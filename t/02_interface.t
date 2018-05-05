@@ -4,17 +4,17 @@ use strict;
 use warnings;
 use Test::More;
 
-use Kube::Control;
+use Kubectl::CLIWrapper;
 
 {
-  my $control = Kube::Control->new(namespace => 'ns1');
+  my $control = Kubectl::CLIWrapper->new(namespace => 'ns1');
   my $command = $control->command_for('create pod');
   diag $command;
   cmp_ok($command, 'eq', 'kubectl --namespace=ns1 create pod');
 }
 
 {
-  my $control = Kube::Control->new(
+  my $control = Kubectl::CLIWrapper->new(
     namespace => 'ns1',
     server => 'https://server1.example.com',
     username => 'u1',
@@ -28,7 +28,7 @@ use Kube::Control;
 }
 
 {
-  my $ok = Kube::Control->new(
+  my $ok = Kubectl::CLIWrapper->new(
     kubectl => 't/fake_kubectl/ok',
     namespace => 'x',
   );
@@ -43,7 +43,7 @@ use Kube::Control;
 }
 
 {
-  my $error = Kube::Control->new(
+  my $error = Kubectl::CLIWrapper->new(
     kubectl => 't/fake_kubectl/error',
     namespace => 'x',
   );
@@ -58,7 +58,7 @@ use Kube::Control;
 }
 
 {
-  my $json = Kube::Control->new(
+  my $json = Kubectl::CLIWrapper->new(
     kubectl => 't/fake_kubectl/ok_with_result',
     namespace => 'x',
   );

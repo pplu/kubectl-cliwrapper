@@ -1,4 +1,4 @@
-package Kube::Control::Result {
+package Kubectl::CLIWrapper::Result {
   use Moose;
   has rc => (is => 'ro', isa => 'Int', required => 1);
   has output => (is => 'ro', isa => 'Str');
@@ -9,7 +9,7 @@ package Kube::Control::Result {
     $self->rc == 0;
   });
 }
-package Kube::Control {
+package Kubectl::CLIWrapper {
   use Moose;
   use JSON::MaybeXS;
   use IPC::Open3;
@@ -56,14 +56,14 @@ package Kube::Control {
       JSON->new->decode($result->output);
     };
     if ($@) {
-      return Kube::Control::Result->new(
+      return Kubectl::CLIWrapper::Result->new(
         rc => $result->rc,
         output => $result->output,
         success => 0
       );
     }
 
-    return Kube::Control::Result->new(
+    return Kubectl::CLIWrapper::Result->new(
       rc => $result->rc,
       output => $result->output,
       json => $struct
@@ -88,7 +88,7 @@ package Kube::Control {
     waitpid( $pid, 0 );
     my $rc = $? >> 8;
 
-    return Kube::Control::Result->new(
+    return Kubectl::CLIWrapper::Result->new(
       rc => $rc,
       output => $out,
     );
