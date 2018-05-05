@@ -36,7 +36,7 @@ package Kubectl::CLIWrapper {
     return $self->input($command);
   }
 
-  sub json_command {
+  sub json {
     my ($self, $command) = @_;
 
     $command .= ' -o=json';

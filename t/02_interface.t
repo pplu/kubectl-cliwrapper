@@ -83,7 +83,7 @@ use Kubectl::CLIWrapper;
   ok(not(defined $r2->json));
   like($r2->output, qr/apiVersion/);
 
-  my $r3 = $json->json_command('stub');
+  my $r3 = $json->json('stub');
   cmp_ok($r3->success, '==', 1);
   ok(ref($r3->json) eq 'HASH');
   cmp_ok($r3->json->{ apiVersion }, 'eq', 'v1');
