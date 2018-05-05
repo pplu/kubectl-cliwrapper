@@ -28,6 +28,17 @@ use Kubectl::CLIWrapper;
 }
 
 {
+  my $control = Kubectl::CLIWrapper->new(
+    server => 'https://server1.example.com',
+    username => 'u1',
+    password => 'p1',
+  );
+  my $command = join ' ', $control->command_for('create pod');
+  diag $command;
+  like($command, qr/--namespace=default/);
+}
+
+{
   my $ok = Kubectl::CLIWrapper->new(
     kubectl => 't/fake_kubectl/ok',
     namespace => 'x',

@@ -9,7 +9,7 @@ package Kubectl::CLIWrapper {
   has password => (is => 'ro', isa => 'Str');
   has token => (is => 'ro', isa => 'Str');
   has insecure_tls => (is => 'ro', isa => 'Bool', default => 0);
-  has namespace => (is => 'ro', isa => 'Str', required => 1);
+  has namespace => (is => 'ro', isa => 'Str', default => 'default');
 
   has kubectl => (is => 'ro', isa => 'Str', default => 'kubectl');
 
