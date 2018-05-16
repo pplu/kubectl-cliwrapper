@@ -187,7 +187,7 @@ C<success> will be set accordingly.
 
 L<https://kubernetes.io/docs/tasks/tools/install-kubectl/>
 
-L<K8s::IO>
+L<IO::K8s>
 
 L<https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/>
 
