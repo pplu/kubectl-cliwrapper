@@ -10,14 +10,22 @@ package Kubectl::CLIWrapper {
   has username => (is => 'ro', isa => 'Str');
   has password => (is => 'ro', isa => 'Str');
   has token => (is => 'ro', isa => 'Str');
+  has kubeconfig => (is => 'ro', isa => 'Str', predicate => 'has_kubeconfig');
+
   has insecure_tls => (is => 'ro', isa => 'Bool', default => 0);
   has namespace => (is => 'ro', isa => 'Str', default => 'default');
 
   has kubectl => (is => 'ro', isa => 'Str', default => 'kubectl');
 
-  has kube_options => (is => 'ro', isa => 'ArrayRef[Str]', lazy => 1, default => sub {
-    my $self = shift;
+  has kube_options => (
+        is      => 'ro',
+        isa     => 'ArrayRef[Str]',
+        lazy    => 1,
+        builder => 'build_options',
+  );
 
+  sub build_options {
+    my $self = shift;
     my %options = ();
     $options{ server } = $self->server if (defined $self->server);
     $options{ username } = $self->username if (defined $self->username);
@@ -25,8 +33,10 @@ package Kubectl::CLIWrapper {
     $options{ namespace } = $self->namespace;
     $options{ 'insecure-skip-tls-verify' } = 'true' if ($self->insecure_tls);
 
+    $options{kubeconfig} = $self->kubeconfig if $self->has_kubeconfig;
+
     return [ map { "--$_=$options{ $_ }" } keys %options ];
-  });
+  }
 
   sub command_for {
     my ($self, @params) = @_;
@@ -138,6 +148,10 @@ line (loading ~/.kube/config) which may be already set to point to a Kubernetes 
 
 By default initialized to C<kubectl>. It will try to find kubectl in the PATH. You can
 set it explicitly to specific kubectl excecutable.
+
+=head2 kubeconfig
+
+Path to your kube configuration, defaults to C<$HOME/.kube/config> via kubectl.
 
 =head2 server
 
