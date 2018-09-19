@@ -9,7 +9,7 @@ use Kubectl::CLIWrapper;
 {
   my $control = Kubectl::CLIWrapper->new(namespace => 'ns1');
   my $command = join ' ', $control->command_for('create', 'pod');
-  diag $command;
+  note $command;
   cmp_ok($command, 'eq', 'kubectl --namespace=ns1 create pod');
 }
 
@@ -22,7 +22,7 @@ use Kubectl::CLIWrapper;
     kubeconfig => './foo',
   );
   my $command = join ' ', $control->command_for('create', 'pod');
-  diag $command;
+  note $command;
   like($command, qr/--username=u1/);
   like($command, qr/--password=p1/);
   like($command, qr|--server=https://server1.example.com|);
