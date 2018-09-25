@@ -4,7 +4,7 @@ package Kubectl::CLIWrapper {
   use IPC::Open3;
   use Kubectl::CLIWrapper::Result;
 
-  our $VERSION = '0.02';
+  our $VERSION = '0.03';
 
   has kubeconfig => (is => 'ro', isa => 'Str', predicate => 'has_kubeconfig');
   has kubectl => (is => 'ro', isa => 'Str', default => 'kubectl');
@@ -205,6 +205,10 @@ L<IO::K8s>
 L<https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/>
 
 L<Net::Kubernetes>
+
+=head1 CONTRIBUTORS
+
+waterkip: adding the possiblity to set a kubeconfig file
 
 =head1 AUTHOR
 
