@@ -30,6 +30,7 @@ package Kubectl::CLIWrapper {
     $options{server}     = $self->server     if $self->has_server;
     $options{username}   = $self->username   if $self->has_username;
     $options{password}   = $self->password   if $self->has_password;
+    $options{token}      = $self->token      if $self->has_token;
     $options{namespace}  = $self->namespace  if $self->has_namespace;
     $options{kubeconfig} = $self->kubeconfig if $self->has_kubeconfig;
     $options{'insecure-skip-tls-verify'} = 'true' if $self->insecure_tls;
