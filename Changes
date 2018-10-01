@@ -1,3 +1,6 @@
+0.04 2018-10-01
+ - token attribute was being ignored (ureesoriano)
+
 0.03 2018-09-25
  - Ability to set a kubeconfig via an attribute (waterkip)
    The namespace parameter no longer gets a default value (if

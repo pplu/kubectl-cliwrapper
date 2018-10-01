@@ -4,7 +4,7 @@ package Kubectl::CLIWrapper {
   use IPC::Open3;
   use Kubectl::CLIWrapper::Result;
 
-  our $VERSION = '0.03';
+  our $VERSION = '0.04';
 
   has kubeconfig => (is => 'ro', isa => 'Str', predicate => 'has_kubeconfig');
   has kubectl => (is => 'ro', isa => 'Str', default => 'kubectl');
@@ -210,6 +210,8 @@ L<Net::Kubernetes>
 =head1 CONTRIBUTORS
 
 waterkip: adding the possiblity to set a kubeconfig file
+
+ureesoriano: fix for token attribute being ignored
 
 =head1 AUTHOR
 
