@@ -6,7 +6,7 @@ package Kubectl::CLIWrapper {
   use Type::Tiny::Union;
   use Types::Standard qw/Str CodeRef Bool/;
 
-  our $VERSION = '0.05';
+  our $VERSION = '0.06';
 
   my $TOKEN_TYPE = Type::Tiny::Union->new(
       type_constraints => [Str, CodeRef]
@@ -215,7 +215,9 @@ L<Net::Kubernetes>
 
 =head1 CONTRIBUTORS
 
-waterkip: adding the possiblity to set a kubeconfig file
+waterkip: 
+ - adding the possiblity to set a kubeconfig file
+ - helping port to Moose
 
 ureesoriano:
  - fix for token attribute being ignored
