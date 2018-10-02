@@ -165,7 +165,9 @@ The password for Basic Authentication
 
 =head2 token
 
-The Bearer token for authentication
+The Bearer token for authentication. If it's a scalar, that value will be used. If it's
+a coderef (sub {}), it will be invoked each time kubectl is called and it's return value
+used as the value of the --token option
 
 =head2 insecure_tls
 
@@ -209,7 +211,9 @@ L<Net::Kubernetes>
 
 waterkip: adding the possiblity to set a kubeconfig file
 
-ureesoriano: fix for token attribute being ignored
+ureesoriano:
+ - fix for token attribute being ignored
+ - dynamic generation of the "token" command-line option 
 
 =head1 AUTHOR
 
