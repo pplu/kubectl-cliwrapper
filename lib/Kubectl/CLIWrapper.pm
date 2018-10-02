@@ -1,20 +1,21 @@
 package Kubectl::CLIWrapper {
-  use Moose;
+  use Moo;
+  use Types::Standard qw/Str CodeRef Bool/;
   use JSON::MaybeXS;
   use IPC::Open3;
   use Kubectl::CLIWrapper::Result;
 
   our $VERSION = '0.05';
 
-  has kubeconfig => (is => 'ro', isa => 'Str', predicate => 'has_kubeconfig');
-  has kubectl => (is => 'ro', isa => 'Str', default => 'kubectl');
-  has namespace => (is => 'ro', isa => 'Str', predicate => 'has_namespace');
-  has password => (is => 'ro', isa => 'Str', predicate => 'has_password');
-  has server => (is => 'ro', isa => 'Str', predicate => 'has_server');
-  has token => (is => 'ro', isa => 'Str|CodeRef', predicate => 'has_token');
-  has username => (is => 'ro', isa => 'Str', predicate => 'has_username');
+  has kubeconfig => (is => 'ro', isa => Str, predicate => 'has_kubeconfig');
+  has kubectl => (is => 'ro', isa => Str, default => 'kubectl');
+  has namespace => (is => 'ro', isa => Str, predicate => 'has_namespace');
+  has password => (is => 'ro', isa => Str, predicate => 'has_password');
+  has server => (is => 'ro', isa => Str, predicate => 'has_server');
+  has token => (is => 'ro', isa => Str, predicate => 'has_token');
+  has username => (is => 'ro', isa => Str, predicate => 'has_username');
 
-  has insecure_tls => (is => 'ro', isa => 'Bool', default => 0);
+  has insecure_tls => (is => 'ro', isa => Bool, default => 0);
 
   sub kube_options {
     my $self = shift;
